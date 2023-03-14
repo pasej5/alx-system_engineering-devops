@@ -1,2 +1,2 @@
 #!/bin/bash
-egrep -C "bin/" /etc/passed
+grep -C "bin/" /etc/passed
