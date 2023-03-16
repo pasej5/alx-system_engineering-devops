@@ -1,2 +1,1 @@
-#!/bin/bash
-perl -lne 'printf $%.%2==1'
+
