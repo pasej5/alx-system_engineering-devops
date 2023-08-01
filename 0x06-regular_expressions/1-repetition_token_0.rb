@@ -1,3 +1,6 @@
-#!/urs/bin/env ruby
+#!/usr/bin/env ruby
 
-puts ARGV[0].scan(/(hb)t+\1n/).join
+printf ARGV[0].scan(/hbttn/).join
+printf ARGV[0].scan(/hbtttn/).join
+printf ARGV[0].scan(/hbttttn/).join
+printf ARGV[0].scan(/hbtttttn/).join
