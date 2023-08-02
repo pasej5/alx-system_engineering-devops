@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 
 
-puts ARGV[0].scan(/hbt+t*n/).join("\n")
+puts ARGV[0].scan(/hbt*n/).join
