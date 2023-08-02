@@ -1,2 +1,4 @@
 #!/usr/bin/env ruby
-puts ARGV[0].scan(/(^h.n$)/).join
+#Regular expression that starts with h and ends n
+
+puts ARGV[0].scan(/^h.n$/).join
