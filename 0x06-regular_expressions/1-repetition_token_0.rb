@@ -1,5 +1,10 @@
 #!/usr/bin/env ruby
-puts ARGV[0].scan(/hbttn/).join
-puts ARGV[0].scan(/hbtttn/).join
-puts ARGV[0].scan(/hbttttn/).join
-puts ARGV[0].scan(/hbtttttn/).join
+#Regular expression
+
+input_string = [0]
+
+def regex_match(input)
+  reg = /hbt{2,5}n/
+  input.match reg
+end
+regex_match(input_string)
