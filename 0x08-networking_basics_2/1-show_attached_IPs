@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Displays all active IPv4 IPs on the machine it's executed on, including localhost
+#  Bash script that displays all active IPv4 IPs on the machine
 
-# Use the 'ip' command to get network information
-ip addr show | awk '/inet / { split($2, a, "/"); print a[1] }'
+ifconfig | awk '/inet / { split($2, a, ":"); print a[2] }'
