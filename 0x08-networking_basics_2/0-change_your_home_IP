@@ -3,9 +3,9 @@
 # local hosts resolves to 127.0.0.2
 # facebook.com resolves to 8.8.8.8
 
-sudo cp /etc/hosts ~/hosts.backup
-sed -i 's/^127.0.0.1*localhost$/127.0.0.2 localhost' ~/hosts.backup
-sed -i '/^.*facebook.com.*$/d' ~/hosts.backup
-echo "8.8.8.8 facebook.com" >> ~/hosts.backup
-sudo cp -f ~hosts.backup /etc/hosts
-rm ~/hosts.backup
+sudo cp /etc/hosts ~/hosts.bak
+sed -i 's/^127.0.0.1*localhost$/127.0.0.2 localhost' ~/hosts.bak
+sed -i '/^.*facebook.com.*$/d' ~/hosts.bak
+echo "8.8.8.8 facebook.com" >> ~/hosts.bak
+sudo cp -f ~hosts.bak/etc/hosts
+rm ~/hosts.bak
