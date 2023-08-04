@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
-#  Bash script that displays all active IPv4 IPs on the machine
 
-ifconfig | awk '/inet / { split($2, a, ":"); print a[2] }'
+ifconfig | awk '/inet[[:space:]]/{print $2}'
