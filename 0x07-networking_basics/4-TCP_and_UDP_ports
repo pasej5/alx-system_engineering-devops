@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#Bash script that displays listening ports:
+#hat only shows listening sockets
+#That shows the PID and name of the progr
+
+netstat -tulnp
