@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # puppet file testing
 
-file { 'etc/ssh_config':
+file { 'etc/ssh_cofig':
   ensure => present,
 
 content =>"
