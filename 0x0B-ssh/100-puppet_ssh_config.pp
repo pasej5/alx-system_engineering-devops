@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
-#using a puppet file
+# puppet file testing
 
-$content = '\n    IdentityFile ~/.ssh/school\n    PasswordAuthentication\no'
-exec {'ssh_config':
-  path    => '/usr/bin',
-  command => "echo '${content}' >> /etc/ssh/ssh_config"
+file { 'etc/ssh/_config':
+  ensure => present,
+
+content =>"
+  host*
+  IdentityFile ~/.ssh/school
+  PasswordAuthentication no",
 }
