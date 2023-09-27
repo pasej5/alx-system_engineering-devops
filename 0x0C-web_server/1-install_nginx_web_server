@@ -7,7 +7,7 @@ sudo ufw 'Nginx HTTP'
 
 echo "Hello World!" | sudo tee /var/www/html/index.html
 
+#testing the configuration
 sudo nginx -t
 
-sudo service restart
 sudo service reload
