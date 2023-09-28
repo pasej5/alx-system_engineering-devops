@@ -1,7 +1,7 @@
 #puppet to save time and effort
 
 package { 'nginx'
-  ensure => installed,
+  ensure => 'installed',
 }
 
 file_line { 'install':
