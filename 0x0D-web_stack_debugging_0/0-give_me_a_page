@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# webserver debbug
+
+sudo service apache2 start
