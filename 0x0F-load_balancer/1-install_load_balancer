@@ -13,8 +13,8 @@ frontend jaymat.tech
 
 backend web_servers
         balance roundrobin
-        server 64820-web-01 100.26.236.53
-        server 64820-web-02 107.22.144.34
+        server 345218-web-01 100.26.236.53
+        server 345218-web-02 107.22.144.34
 ' >> /etc/haproxy/haproxy.cfg
 
 # Restart HAproxy service
