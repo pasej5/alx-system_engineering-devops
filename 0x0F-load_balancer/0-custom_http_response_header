@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+#Write 0-custom_http_response_header so that it configure a header
+
+#Good practice to update packages always
+sudo apt-get update
+sudo apt-get install -y nginx
+
+#creating an index page
+echo "Hello World!" | sudo tee /var/www/html/index.html
+
+#redirection
+new_string="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/pasej5 permanent;"
+
+sudo sed -i "s/server_name _;/$new_string" /etc/nginx/sites-enabled/default
+
+#creating custom erro pages
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
+
+# custom HTTP header
+sudo -i "server_name _;/a add_header X-Served-By $HOSTNAME;" /etc/nginx/sites-enabled/default
+
+#Test for any syntax errors
+sudo nginx -t
+
+# restart the nginx
+sudo service nginx restart
