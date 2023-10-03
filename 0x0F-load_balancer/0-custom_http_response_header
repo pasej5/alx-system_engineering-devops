@@ -1,12 +1,20 @@
 #!/usr/bin/env bash
-#Double the number of webservers
+
+# Double the number of webservers
 sudo apt-get -y update
 sudo apt-get -y install nginx
 
+# Create a simple "Hello World!" index page
+sudo echo 'Hello World!' | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
+
+# Add a redirection and a custom 404 page configuration
 config="/etc/nginx/sites-available/default"
-sudo sh -c "echo 'Hello World!' > /var/www/html/index.nginx-debian.html"
 sudo sed -i '/^}$/i \ \n\tlocation \/redirect_me {return 301 https:\/\/github.com\/pasej5;}' $config
 sudo sed -i '/^}$/i \ \n\tlocation @404 {return 404 "Ceci n'\''est pas une page\\n";}' $config
 sudo sed -i 's/=404/@404/g' $config
-sudo sed -i "0,/location \/ {/s/location \/ {/&\n\t\tadd_header X-Served-By '$HOSTNAME';/" $config
+
+# Add an "X-Served-By" header to the default location
+sudo sed -i '0,/location \/ {/s/location \/ {/&\n\t\tadd_header X-Served-By "$HOSTNAME";/' $config
+
+# Restart the nginx service
 sudo service nginx restart
