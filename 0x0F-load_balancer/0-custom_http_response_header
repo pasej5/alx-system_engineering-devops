@@ -1,24 +1,27 @@
 #!/usr/bin/env bash
+# customization of the error page
 
-# Good practice to update packages always
+# Installing and updating packages
 sudo apt-get update
 sudo apt-get install -y nginx
 
-# Creating an index page
+# creating an index page
 echo "Hello World!" | sudo tee /var/www/html/index.html
 
-# Redirection
-new_string="server_name _;\n\trewrite ^/redirect_me https://github.com/pasej5 permanent;"
-sudo sed -i "s/server_name _;/$new_string/" /etc/nginx/sites-enabled/default
+# perfoming redirection
+new_string="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/pasej5 permanent;"
+sudo sed -i "s/server_name _;/$new_string" /etc/nginx/sites-enabled/default
 
-# Creating custom error pages
+# creating custom erro pages
 echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
+new_string="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
+sudo sed -i "s/listen 80 default_server;/$new_string/" /etc/nginx/sites-enabled/default
 
-# Custom HTTP header
-sudo sed -i '/server_name _;/a add_header X-Served-By $HOSTNAME;' /etc/nginx/sites-enabled/default
+# custom HTTP header
+sudo  sed -i "server_name _;/a add_header X-Served-By $HOSTNAME;" /etc/nginx/sites-enabled/default
 
 # Test for any syntax errors
 sudo nginx -t
 
-# Restart Nginx
+# restart the nginx
 sudo service nginx restart
