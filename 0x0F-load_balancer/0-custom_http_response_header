@@ -1,20 +1,29 @@
 #!/usr/bin/env bash
+# configure web-02 to be identical to web-01
 
-# Double the number of webservers
+# update packages
 sudo apt-get -y update
+
+# Install the Nginx web server.
 sudo apt-get -y install nginx
 
-# Create a simple "Hello World!" index page
-sudo echo 'Hello World!' | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
-
-# Add a redirection and a custom 404 page configuration
+# Define the configuration file path for Nginx.
 config="/etc/nginx/sites-available/default"
+
+# Create a simple "Hello World!" index page in the web server's root directory.
+sudo sh -c "echo 'Hello World!' > /var/www/html/index.nginx-debian.html"
+
+# Add a custom Nginx configuration block to perform a 301 redirect for a specific URL.
 sudo sed -i '/^}$/i \ \n\tlocation \/redirect_me {return 301 https:\/\/github.com\/pasej5;}' $config
+
+# Add a custom Nginx configuration block to handle a 404 error with a custom message.
 sudo sed -i '/^}$/i \ \n\tlocation @404 {return 404 "Ceci n'\''est pas une page\\n";}' $config
+
+# Replace instances of "=404" with "@404" in the Nginx configuration file.
 sudo sed -i 's/=404/@404/g' $config
 
-# Add an "X-Served-By" header to the default location
-sudo sed -i '0,/location \/ {/s/location \/ {/&\n\t\tadd_header X-Served-By "$HOSTNAME";/' $config
+# Add an "add_header" directive to include the server's hostname in the response headers.
+sudo sed -i "0,/location \/ {/s/location \/ {/&\n\t\tadd_header X-Served-By '$HOSTNAME';/" $config
 
-# Restart the nginx service
+# Restart the Nginx service to apply the configuration changes.
 sudo service nginx restart
