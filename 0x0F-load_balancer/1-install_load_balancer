@@ -3,7 +3,7 @@
 
 # Install HAproxy on a server
 sudo apt-get -y update
-sudo apt-get -y install haproxy=2.4.\*
+sudo apt-get -y install haproxy=1.6.\*
 
 # configuration of round robin
 echo '
