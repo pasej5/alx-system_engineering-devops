@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Nginx installation from listening on port 80
+
+# Remove the installion files
+rm /etc/nginx/sites-enabled/default
+# configuring nginx to listen to port 80
+ln -s /etc/nginx/sites-available /etc/nginx/sites-enabled/default
+# restart nginx
+service nginx restart
