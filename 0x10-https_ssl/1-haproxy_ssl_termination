@@ -1,5 +1,4 @@
-
-bal
+global
         log /dev/log    local0
         log /dev/log    local1 notice
         chroot /var/lib/haproxy
@@ -18,6 +17,7 @@ bal
         ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
         ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
         ssl-dh-param-file /etc/haproxy/dhparams.pem
+
 defaults
         log     global
         mode    http
@@ -34,13 +34,10 @@ defaults
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
 
-backend my_backend
-        balance roundrobin
-        server 345218-web-01 100.26.236.53:80 check
-        server 345218-web-02 107.22.144.34:80 check
-
-frontend http_front
+listen myserver
         bind *:80
         bind *:443 ssl crt /etc/letsencrypt/live/www.devmat.tech/fullchain.pem
         redirect scheme https code 301 if !{ ssl_fc }
-        default_backend my_backend
+        balance roundrobin
+        server 345218-web-01 100.26.236.53:80 check
+        server 345218-web-02 107.22.144.34:80 check
