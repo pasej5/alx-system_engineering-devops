@@ -6,40 +6,28 @@ import sys
 import csv
 
 if __name__ == '__main__':
-    # Check if an employee ID is provided as a command-line argument
-    if len(sys.argv) != 2:
-        print("Usage: python script_name.py <employee_id>")
-        sys.exit(1)
-
     employeeId = sys.argv[1]
     baseUrl = "https://jsonplaceholder.typicode.com/users"
     url = baseUrl + "/" + employeeId
 
-    # Fetch employee information
     response = requests.get(url)
-    employee = response.json()
-    employeeName = employee.get('name')
-    userId = employee.get('id')
+    employeeName = response.json().get('name')
 
     todoUrl = url + "/todos"
     response = requests.get(todoUrl)
     tasks = response.json()
+    done_tasks = []
 
-    # Create a CSV file with the user ID as the filename
-    filename = f"{userId}.csv"
-    with open(filename, 'w', newline='') as csvfile:
-        csv_writer = csv.writer(csvfile)
+    for task in tasks:
+        if task.get('completed'):
+            done_tasks.append(task)
 
-        # Write the CSV header
+    csv_file_name = f"{employeeId}.csv"
+    with open(csv_file_name, mode='w', newline='') as csv_file:
+        csv_writer = csv.writer(csv_file)
         csv_writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
 
-        done_tasks = []
+        for task in done_tasks:
+            csv_writer.writerow([employeeId, employeeName, "Completed", task.get('title')])
 
-        for task in tasks:
-            if task.get('completed'):
-                done_tasks.append(task)
-                # Write task details to CSV
-                csv_writer.writerow([userId, employeeName, "Completed", task.get('title')])
-
-    print(f"Data exported to {filename}")
-
+    print(f"Data exported to {csv_file_name}")
