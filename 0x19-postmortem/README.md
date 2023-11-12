@@ -1,5 +1,8 @@
 # Project: 0x19. Postmortem
 
+![postmoterm](https://github.com/pasej5/alx-system_engineering-devops/assets/125504697/16bd9b64-34df-4a64-af5c-dd43a84ded2f)
+
+
 ## Resources
 
 #### Read or watch:
