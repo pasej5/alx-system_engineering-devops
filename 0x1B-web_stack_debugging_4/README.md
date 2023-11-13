@@ -1,5 +1,8 @@
 # Project: 0x1B. Web stack debugging #4
 
+
+![webstack debugging](https://github.com/pasej5/alx-system_engineering-devops/assets/125504697/d51a5e2a-52b8-4ddf-98f7-21b28d2feff1)
+
 ## Tasks
 
 | Task | File |
