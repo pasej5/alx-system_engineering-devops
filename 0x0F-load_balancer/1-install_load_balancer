@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# configures a new HAproxy as a load balancer
+
+# Install HAproxy on a server
+sudo apt-get -y update
+sudo apt-get -y install haproxy=1.6.\*
+
+# configuration of round robin
+echo '
+frontend jaymat.tech
+        bind 0:80
+        default_backend web_servers
+
+backend web_servers
+        balance roundrobin
+        server 345218-web-01 100.26.236.53
+        server 345218-web-02 107.22.144.34
+' >> /etc/haproxy/haproxy.cfg
+
+# Restart HAproxy service
+service haproxy restart

@@ -1,26 +1,29 @@
 #!/usr/bin/env bash
-#Write 0-custom_http_response_header so that it configure a header
+# configure web-02 to be identical to web-01
 
-#Good practice to update packages always
-sudo apt-get update
-sudo apt-get install -y nginx
+# update packages
+sudo apt-get -y update
 
-#creating an index page
-echo "Hello World!" | sudo tee /var/www/html/index.html
+# Install the Nginx web server.
+sudo apt-get -y install nginx
 
-#redirection
-new_string="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/pasej5 permanent;"
+# Define the configuration file path for Nginx.
+config="/etc/nginx/sites-available/default"
 
-sudo sed -i "s/server_name _;/$new_string" /etc/nginx/sites-enabled/default
+# Create a simple "Hello World!" index page in the web server's root directory.
+sudo sh -c "echo 'Hello World!' > /var/www/html/index.nginx-debian.html"
 
-#creating custom erro pages
-echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
+# Add a custom Nginx configuration block to perform a 301 redirect for a specific URL.
+sudo sed -i '/^}$/i \ \n\tlocation \/redirect_me {return 301 https:\/\/github.com\/pasej5;}' $config
 
-# custom HTTP header
-sudo -i "server_name _;/a add_header X-Served-By $HOSTNAME;" /etc/nginx/sites-enabled/default
+# Add a custom Nginx configuration block to handle a 404 error with a custom message.
+sudo sed -i '/^}$/i \ \n\tlocation @404 {return 404 "Ceci n'\''est pas une page\\n";}' $config
 
-#Test for any syntax errors
-sudo nginx -t
+# Replace instances of "=404" with "@404" in the Nginx configuration file.
+sudo sed -i 's/=404/@404/g' $config
 
-# restart the nginx
+# Add an "add_header" directive to include the server's hostname in the response headers.
+sudo sed -i "0,/location \/ {/s/location \/ {/&\n\t\tadd_header X-Served-By '$HOSTNAME';/" $config
+
+# Restart the Nginx service to apply the configuration changes.
 sudo service nginx restart
